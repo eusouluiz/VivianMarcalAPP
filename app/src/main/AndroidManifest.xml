@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Projeto_DS2">
         <activity
+            android:name=".MensagensActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AvisoActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
