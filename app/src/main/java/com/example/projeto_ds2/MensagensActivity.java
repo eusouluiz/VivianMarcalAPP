@@ -11,6 +11,7 @@ import android.widget.Button;
 import com.example.projeto_ds2.adapter.MensagemListAdapter;
 import com.example.projeto_ds2.model.mensagem.Mensagem;
 import com.example.projeto_ds2.model.mensagem.OrigemEnum;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
@@ -28,14 +29,16 @@ public class MensagensActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        Button botao = findViewById(R.id.button_mensagem);
-        botao.setOnClickListener(new View.OnClickListener() {
+        TextInputEditText campoMensagem = findViewById(R.id.edit_text_mensagem);
+
+        Button botaoEnvio = findViewById(R.id.button_mensagem);
+        botaoEnvio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Mensagem novaMensagem = new Mensagem(OrigemEnum.Remetente, "teste");
+                Mensagem novaMensagem = new Mensagem(OrigemEnum.Remetente, campoMensagem.getText().toString());
                 adicionarNovaMensagem(novaMensagem, recyclerView);
-                novaMensagem = new Mensagem(OrigemEnum.Destinatario, "teste");
-                adicionarNovaMensagem(novaMensagem, recyclerView);
+
+                campoMensagem.setText("");
             }
         });
 
