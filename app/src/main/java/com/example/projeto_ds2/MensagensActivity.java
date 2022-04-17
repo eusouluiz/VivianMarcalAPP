@@ -34,6 +34,8 @@ public class MensagensActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Mensagem novaMensagem = new Mensagem(OrigemEnum.Remetente, "teste");
                 adicionarNovaMensagem(novaMensagem, recyclerView);
+                novaMensagem = new Mensagem(OrigemEnum.Destinatario, "teste");
+                adicionarNovaMensagem(novaMensagem, recyclerView);
             }
         });
 

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projeto_ds2.R;
 import com.example.projeto_ds2.model.mensagem.Mensagem;
+import com.example.projeto_ds2.model.mensagem.OrigemEnum;
 
 import java.util.ArrayList;
 
@@ -25,10 +26,21 @@ public class MensagemListAdapter extends RecyclerView.Adapter<MensagemListAdapte
     @Override
     public MensagemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View layout = layoutInflater.inflate(R.layout.view_mensagem_remetente, parent, false);
+        View layout;
+        if (viewType == OrigemEnum.Remetente.getId()) {
+            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+            layout = layoutInflater.inflate(R.layout.view_mensagem_remetente, parent, false);
+        } else {
+            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+            layout = layoutInflater.inflate(R.layout.view_mensagem_destinatario, parent, false);
+        }
 
         return new MensagemViewHolder(layout);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return mensagens.get(position).getOrigem().getId();
     }
 
     @Override
