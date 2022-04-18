@@ -26,5 +26,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button buttonAvisos = findViewById(R.id.button2);
+
+        buttonAvisos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MainActivity.this, AvisoActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
     }
 }
