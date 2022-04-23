@@ -47,7 +47,7 @@ public class MensagemListAdapter extends RecyclerView.Adapter<MensagemListAdapte
     public void onBindViewHolder(@NonNull MensagemViewHolder holder, int position) {
         Mensagem mensagem = mensagens.get(position);
 
-        TextView texto = holder.itemView.findViewById(R.id.text_mensagem_remetente);
+        TextView texto = holder.itemView.findViewById(R.id.text_mensagem);
 
         texto.setText(mensagem.getTexto());
     }

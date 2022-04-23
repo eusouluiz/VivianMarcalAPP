@@ -38,6 +38,10 @@ public class MensagensActivity extends AppCompatActivity {
                 Mensagem novaMensagem = new Mensagem(OrigemEnum.Remetente, campoMensagem.getText().toString());
                 adicionarNovaMensagem(novaMensagem, recyclerView);
 
+                novaMensagem = new Mensagem(OrigemEnum.Destinatario, "Olá! :)\nAgradecemos sua " +
+                                        "mensagem, mas infelizmente não estamos disponíveis no momento.");
+                adicionarNovaMensagem(novaMensagem, recyclerView);
+
                 campoMensagem.setText("");
             }
         });
