@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Projeto_DS2">
         <activity
+            android:name=".AdicionarAvisoActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:exported="false" />
+        <activity
             android:name=".MensagensActivity"
             android:windowSoftInputMode="adjustPan"
             android:exported="false" />

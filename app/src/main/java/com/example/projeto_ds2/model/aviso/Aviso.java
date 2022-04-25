@@ -5,6 +5,9 @@ import java.util.ArrayList;
 
 
 public class Aviso implements Serializable {
+
+    private static final long serialVersionUID = -5938145431131500078L;
+
     private String texto;
 
     public Aviso(String texto) {

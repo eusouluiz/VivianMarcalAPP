@@ -17,6 +17,7 @@ import com.example.projeto_ds2.model.mensagem.Mensagem;
 import java.util.ArrayList;
 
 public class AvisoActivity extends AppCompatActivity {
+    AvisoListAdapter avisoListAdapter;
 
     private ArrayList<Aviso> avisos = new ArrayList<>();
 
@@ -36,7 +37,7 @@ public class AvisoActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view_avisos);
 
-        AvisoListAdapter avisoListAdapter =
+        avisoListAdapter =
                 new AvisoListAdapter(avisos,
                         new AvisoListAdapter.OnAvisoClickListener() {
                             @Override
@@ -76,6 +77,7 @@ public class AvisoActivity extends AppCompatActivity {
 
             Aviso aviso = (Aviso) data.getSerializableExtra("aviso");
             avisos.add(aviso);
+
         }
 
     }

@@ -19,9 +19,9 @@ public class AvisoListAdapter extends RecyclerView.Adapter<AvisoListAdapter.Avis
     private ArrayList<Aviso> avisos;
     private OnAvisoClickListener listener;
 
-    public AvisoListAdapter(ArrayList<Aviso> users,
+    public AvisoListAdapter(ArrayList<Aviso> avisos,
                            OnAvisoClickListener listener){
-        this.avisos = users;
+        this.avisos = avisos;
         this.listener = listener;
     }
 
