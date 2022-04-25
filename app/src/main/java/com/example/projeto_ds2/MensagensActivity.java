@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class MensagensActivity extends AppCompatActivity {
     MensagemListAdapter mensagemListAdapter;
 
-   private ArrayList<Mensagem> mensagens = new ArrayList<>();
+    private ArrayList<Mensagem> mensagens = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,7 @@ public class MensagensActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view_mensagens);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         TextInputEditText campoMensagem = findViewById(R.id.edit_text_mensagem);
