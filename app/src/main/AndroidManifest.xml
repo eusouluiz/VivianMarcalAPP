@@ -11,6 +11,7 @@
         android:theme="@style/Theme.Projeto_DS2">
         <activity
             android:name=".MensagensActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".AvisoActivity"
