@@ -51,6 +51,18 @@ public class AdicionarAvisoActivity extends AppCompatActivity {
             //finish();
 
         });
+        Button cancelButton = findViewById(R.id.button_cancel);
+
+        cancelButton.setOnClickListener(v -> {
+
+            Intent intent = new Intent();
+            setResult(RESULT_OK,intent);
+            onBackPressed();
+            //finish();
+
+        });
+
+
     }
 
 

@@ -5,6 +5,7 @@
     android:id="@+id/text_input_aviso"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/painel_avisos_transparente"
     tools:context=".AvisoActivity">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -30,15 +31,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recycler_view_avisos" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="381dp"
-        android:layout_height="549dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/recycler_view_avisos"
-        app:srcCompat="@drawable/painel_avisos" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
