@@ -4,6 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Aluno/StudioProjects/Projeto_DS2/app/src/main/res/layout/activity_main.xml" value="0.19882246376811594" />
+        <entry key="app/src/main/res/layout/activity_add_aviso.xml" value="0.22327898550724637" />
+        <entry key="app/src/main/res/layout/activity_aviso.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_mensagens.xml" value="0.22327898550724637" />
+        <entry key="app/src/main/res/layout/view_aviso.xml" value="0.2760416666666667" />
+        <entry key="app/src/main/res/layout/view_mensagem_destinatario.xml" value="0.22327898550724637" />
+        <entry key="app/src/main/res/layout/view_mensagem_remetente.xml" value="0.2760416666666667" />
       </map>
     </option>
   </component>
