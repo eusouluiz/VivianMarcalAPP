@@ -17,9 +17,9 @@ import com.example.projeto_ds2.model.mensagem.Mensagem;
 import java.util.ArrayList;
 
 public class AvisoActivity extends AppCompatActivity {
-    AvisoListAdapter avisoListAdapter;
 
     private ArrayList<Aviso> avisos = new ArrayList<>();
+    AvisoListAdapter avisoListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +62,7 @@ public class AvisoActivity extends AppCompatActivity {
 
         if(aviso != null){
             intent.putExtra("aviso",aviso);
+            avisos.remove(aviso);
         }
 
         startActivityForResult(intent,100);
@@ -77,7 +78,12 @@ public class AvisoActivity extends AppCompatActivity {
 
             Aviso aviso = (Aviso) data.getSerializableExtra("aviso");
             avisos.add(aviso);
+            avisoListAdapter.notifyDataSetChanged();
+        }
 
+        if(requestCode == 100 && resultCode == RESULT_CANCELED){
+
+            avisoListAdapter.notifyDataSetChanged();
         }
 
     }

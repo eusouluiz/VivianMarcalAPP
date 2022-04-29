@@ -50,6 +50,10 @@ public class MensagemListAdapter extends RecyclerView.Adapter<MensagemListAdapte
         TextView texto = holder.itemView.findViewById(R.id.text_mensagem);
 
         texto.setText(mensagem.getTexto());
+
+        TextView hora = holder.itemView.findViewById(R.id.time_msg);
+
+        hora.setText(mensagem.getHora());
     }
 
     @Override

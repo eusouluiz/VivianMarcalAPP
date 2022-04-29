@@ -3,7 +3,10 @@ package com.example.projeto_ds2;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +19,9 @@ public class AdicionarAvisoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_aviso);
 
@@ -40,7 +46,7 @@ public class AdicionarAvisoActivity extends AppCompatActivity {
                 return;
             }
 
-            Aviso aviso = new Aviso(aviso_completo);
+            Aviso aviso = new Aviso(aviso_completo, sdf.format(calendar.getTime()));
 
             Intent intent = new Intent();
             intent.putExtra("aviso",aviso);
@@ -55,8 +61,7 @@ public class AdicionarAvisoActivity extends AppCompatActivity {
 
         cancelButton.setOnClickListener(v -> {
 
-            Intent intent = new Intent();
-            setResult(RESULT_OK,intent);
+            setResult(RESULT_CANCELED);
             onBackPressed();
             //finish();
 

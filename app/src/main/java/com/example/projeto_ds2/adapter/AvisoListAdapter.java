@@ -37,10 +37,10 @@ public class AvisoListAdapter extends RecyclerView.Adapter<AvisoListAdapter.Avis
                         parent,
                         false);
 
-        AvisoViewHolder userViewHolder =
+        AvisoViewHolder avisoViewHolder =
                 new AvisoViewHolder(layout);
 
-        return userViewHolder;
+        return avisoViewHolder;
     }
 
     @Override
@@ -49,10 +49,15 @@ public class AvisoListAdapter extends RecyclerView.Adapter<AvisoListAdapter.Avis
 
         Aviso aviso = avisos.get(position);
 
-        TextView textViewFirstName = holder.itemView.
-                findViewById(R.id.edit_text_aviso);
+        TextView textViewAviso = holder.itemView.
+                findViewById(R.id.text_aviso);
 
-        textViewFirstName.setText(aviso.getTexto());
+        textViewAviso.setText(aviso.getTexto());
+
+        TextView timeTextViewAviso = holder.itemView.
+                findViewById(R.id.time_aviso);
+
+        timeTextViewAviso.setText(aviso.getHora());
 
     }
 

@@ -9,6 +9,22 @@ public class Mensagem implements Serializable {
     private OrigemEnum origem;
     private String texto;
 
+    public Mensagem(OrigemEnum origem, String texto, String hora) {
+        this.origem = origem;
+        this.texto = texto;
+        this.hora = hora;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    private String hora;
+
     public Mensagem(OrigemEnum origem, String texto) {
         this.origem = origem;
         this.texto = texto;
