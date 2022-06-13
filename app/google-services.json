@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:674584299677:android:b81d7fee53535297d52c74",
+        "mobilesdk_app_id": "1:674584299677:android:ca4e57d87dd49590d52c74",
         "android_client_info": {
-          "package_name": "com.example.projeto_ds2"
+          "package_name": "br.edu.up.vivianmarcal"
         }
       },
       "oauth_client": [

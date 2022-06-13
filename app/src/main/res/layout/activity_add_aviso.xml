@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/mensagem_aviso_transparente"
-    tools:context=".AdicionarAvisoActivity">
+    tools:context="br.edu.up.vivianmarcal.AdicionarAvisoActivity">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/edit_text_aviso"

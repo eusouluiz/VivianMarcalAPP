@@ -11,21 +11,21 @@
         android:theme="@style/Theme.Projeto_DS2">
         <!-- android:roundIcon="@mipmap/ic_launcher_round" -->
         <activity
-            android:name=".AdicionarAvisoActivity"
+            android:name="br.edu.up.vivianmarcal.AdicionarAvisoActivity"
             android:windowSoftInputMode="adjustPan"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".MensagensActivity"
+            android:name="br.edu.up.vivianmarcal.MensagensActivity"
             android:windowSoftInputMode="stateVisible|adjustPan"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".AvisoActivity"
+            android:name="br.edu.up.vivianmarcal.AvisoActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".MainActivity"
+            android:name="br.edu.up.vivianmarcal.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

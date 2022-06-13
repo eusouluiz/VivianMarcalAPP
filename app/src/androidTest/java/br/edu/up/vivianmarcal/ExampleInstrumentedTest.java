@@ -1,4 +1,4 @@
-package com.example.projeto_ds2;
+package br.edu.up.vivianmarcal;
 
 import android.content.Context;
 

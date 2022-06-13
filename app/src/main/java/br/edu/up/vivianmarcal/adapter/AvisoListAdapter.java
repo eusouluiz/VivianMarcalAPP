@@ -1,4 +1,4 @@
-package com.example.projeto_ds2.adapter;
+package br.edu.up.vivianmarcal.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.projeto_ds2.model.aviso.Aviso;
+import br.edu.up.vivianmarcal.model.aviso.Aviso;
 import com.example.projeto_ds2.R;
 
 import java.util.ArrayList;

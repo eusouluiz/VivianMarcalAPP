@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/painel_avisos_transparente"
-    tools:context=".AvisoActivity">
+    tools:context="br.edu.up.vivianmarcal.AvisoActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_avisos"

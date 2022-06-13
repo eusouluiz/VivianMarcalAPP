@@ -1,18 +1,18 @@
-package com.example.projeto_ds2;
+package br.edu.up.vivianmarcal;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.projeto_ds2.adapter.MensagemListAdapter;
-import com.example.projeto_ds2.model.aviso.Aviso;
+import com.example.projeto_ds2.R;
+
+import br.edu.up.vivianmarcal.model.aviso.Aviso;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class AdicionarAvisoActivity extends AppCompatActivity {

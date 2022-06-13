@@ -1,4 +1,4 @@
-package com.example.projeto_ds2;
+package br.edu.up.vivianmarcal;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,9 +10,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.projeto_ds2.adapter.AvisoListAdapter;
-import com.example.projeto_ds2.model.aviso.Aviso;
-import com.example.projeto_ds2.model.mensagem.Mensagem;
+import com.example.projeto_ds2.R;
+
+import br.edu.up.vivianmarcal.adapter.AvisoListAdapter;
+import br.edu.up.vivianmarcal.model.aviso.Aviso;
 
 import java.util.ArrayList;
 

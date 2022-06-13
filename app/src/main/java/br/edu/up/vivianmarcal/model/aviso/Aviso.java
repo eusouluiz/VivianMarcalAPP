@@ -1,7 +1,6 @@
-package com.example.projeto_ds2.model.aviso;
+package br.edu.up.vivianmarcal.model.aviso;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 
 public class Aviso implements Serializable {

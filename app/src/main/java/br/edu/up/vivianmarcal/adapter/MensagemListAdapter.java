@@ -1,4 +1,4 @@
-package com.example.projeto_ds2.adapter;
+package br.edu.up.vivianmarcal.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projeto_ds2.R;
-import com.example.projeto_ds2.model.mensagem.Mensagem;
-import com.example.projeto_ds2.model.mensagem.OrigemEnum;
+import br.edu.up.vivianmarcal.mensagem.model.Mensagem;
+import br.edu.up.vivianmarcal.mensagem.model.OrigemEnum;
 
 import java.util.ArrayList;
 

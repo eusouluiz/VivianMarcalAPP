@@ -1,9 +1,9 @@
-package com.example.projeto_ds2.model.mensagem;
+package br.edu.up.vivianmarcal.mensagem.model;
 
 public enum OrigemEnum {
 
-    Remetente("remetente", 1),
-    Destinatario("destinatario", 2);
+    Remetente("remetente", 0),
+    Destinatario("destinatario", 1);
 
     private String origem;
     private int id;
