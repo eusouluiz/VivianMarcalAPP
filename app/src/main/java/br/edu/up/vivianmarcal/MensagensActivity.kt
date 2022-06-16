@@ -9,6 +9,7 @@ import android.widget.Button
 import com.example.projeto_ds2.R
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.edu.up.vivianmarcal.firebase.FirebaseConstants
 import br.edu.up.vivianmarcal.firebase.FirebaseVM
 import com.google.android.material.textfield.TextInputEditText
 import br.edu.up.vivianmarcal.model.mensagem.OrigemEnum
@@ -53,39 +54,37 @@ class MensagensActivity : AppCompatActivity() {
         val botaoEnvio = findViewById<Button>(R.id.button_mensagem)
         botaoEnvio.setOnClickListener {
             var novaMensagem = Mensagem(
-                OrigemEnum.Remetente, "nomeTeste", campoMensagem.text.toString()
+                usuario, campoMensagem.text.toString()
             )
-            FirebaseVM.addDataToDocument("Mensagens", novaMensagem.getHash(), mensagens.size)
+            FirebaseVM.addDataToDocument(FirebaseConstants.MENSAGENS_DOC, novaMensagem.getHash(), mensagens.size)
 
             campoMensagem.setText("")
 
         }
     }
 
-    private fun defineAtualizarLista(recyclerView: RecyclerView, entrada: Boolean = true) {
-        val document = FirebaseVM.getDocument("Mensagens")
+    private fun defineAtualizarLista(recyclerView: RecyclerView) {
+        val document = FirebaseVM.getDocument(FirebaseConstants.MENSAGENS_DOC)
         document.addSnapshotListener { value, error ->
             if (error != null) {
                 Log.v("App", "ERRO: " + error.printStackTrace())
             }
 
             if (value != null) {
-                val documentTask = FirebaseVM.getDocumentTask("Mensagens")
+                val documentTask = FirebaseVM.getDocumentTask(FirebaseConstants.MENSAGENS_DOC)
 
                 documentTask.addOnCompleteListener {
                     val lista = it.result.data as HashMap<String, Any>
                     for (i in range(mensagens.size, lista.size)) {
-                        val mensagem = lista["mensagem$i"] as HashMap<String, Any>
-                        val campoTexto = mensagem["corpo"] as String
-                        val nome = mensagem["nome"] as String
-                        val id = mensagem["id"] as Number
-                        val data = mensagem["data"] as Timestamp
+                        val mensagem = lista[FirebaseConstants.MENSAGENS_FIELD_MENSAGEM + i] as HashMap<String, Any>
+                        val campoTexto = mensagem[FirebaseConstants.MENSAGENS_FIELD_CORPO] as String
+                        val usuarioFB = mensagem[FirebaseConstants.MENSAGENS_FIELD_USUARIO] as HashMap<String, Any>
+                        val data = mensagem[FirebaseConstants.MENSAGENS_FIELD_DATA] as Timestamp
 
-                        if (id.toInt() == 0) {
+                        if (usuarioFB["id"] == usuario!!.id) {
                             mensagens.add(
                                 Mensagem(
                                     OrigemEnum.Remetente,
-                                    nome,
                                     campoTexto,
                                     sdf.format(data.toDate().time)
                                 )
@@ -94,7 +93,6 @@ class MensagensActivity : AppCompatActivity() {
                             mensagens.add(
                                 Mensagem(
                                     OrigemEnum.Destinatario,
-                                    nome,
                                     campoTexto,
                                     sdf.format(data.toDate().time)
                                 )

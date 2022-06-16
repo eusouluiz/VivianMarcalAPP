@@ -1,48 +1,32 @@
-package br.edu.up.vivianmarcal.model.usuario;
+package br.edu.up.vivianmarcal.model.usuario
 
-import androidx.annotation.NonNull;
+import com.google.firebase.Timestamp
+import java.io.Serializable
 
-import java.io.Serializable;
+class Usuario : Serializable {
+    var id: Number = 0
+    var nome: String
+    var tipoUsuario: String? = null
 
-public class Usuario implements Serializable {
-    private static final long serialVersionUID = 5500378251488245594L;
-
-    private int id;
-    private String nome;
-    private String tipoUsuario;
-
-    public Usuario(int id, String nome, String tipoUsuario) {
-        this.id = id;
-        this.nome = nome;
-        this.tipoUsuario = tipoUsuario;
+    constructor(id: Number, nome: String, tipoUsuario: String?) {
+        this.id = id
+        this.nome = nome
+        this.tipoUsuario = tipoUsuario
     }
 
-    public Usuario(String nome) {
-        this.nome = nome;
+    constructor(nome: String) {
+        this.nome = nome
     }
 
-    public int getId() {
-        return id;
+    fun getHash(): HashMap<String, Any?> {
+        return hashMapOf(
+            "id" to id,
+            "nome" to nome,
+            "tipoUsuario" to tipoUsuario
+        )
     }
 
-    public void setId(int id) {
-        this.id = id;
+    companion object {
+        private const val serialVersionUID = 5500378251488245594L
     }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    public void setTipoUsuario(String tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
-    }
-
 }

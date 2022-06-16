@@ -1,35 +1,36 @@
 package br.edu.up.vivianmarcal.model.mensagem
 
+import br.edu.up.vivianmarcal.firebase.FirebaseConstants
+import br.edu.up.vivianmarcal.model.usuario.Usuario
 import com.google.firebase.Timestamp
 import java.io.Serializable
 import java.util.ArrayList
 import kotlin.collections.HashMap
 
 class Mensagem : Serializable {
+    var usuario: Usuario? = null
     var origem: OrigemEnum? = null
     private var nome: String? = null
     var texto: String
     var hora: String? = null
 
-    constructor(origem: OrigemEnum?, nome: String?, texto: String) {
+    constructor(origem: OrigemEnum?, texto: String, hora: String?) {
         this.origem = origem
-        this.texto = texto
-        this.nome = nome
-    }
-
-    constructor(origem: OrigemEnum?, nome: String?, texto: String, hora: String?) {
-        this.origem = origem
-        this.nome = nome
         this.texto = texto
         this.hora = hora
     }
 
+    constructor(usuario: Usuario?, texto: String) {
+        this.usuario = usuario
+        this.texto = texto
+    }
+
+
     fun getHash(): HashMap<String, Any?> {
         return hashMapOf(
-            "nome" to nome,
-            "id" to origem!!.id as Number,
-            "data" to Timestamp.now(),
-            "corpo" to texto
+            FirebaseConstants.MENSAGENS_FIELD_USUARIO to usuario!!.getHash(),
+            FirebaseConstants.MENSAGENS_FIELD_DATA to Timestamp.now(),
+            FirebaseConstants.MENSAGENS_FIELD_CORPO to texto
         )
     }
 

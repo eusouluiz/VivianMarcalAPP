@@ -8,9 +8,11 @@ import com.google.firebase.ktx.Firebase
 class FirebaseVM {
     companion object {
 
+        private const val COLLECTION_VIVIANMARCAL = "VivianMarcal"
+
         private fun getCollection(): CollectionReference{
             val firestore = Firebase.firestore
-            return firestore.collection("VivianMarcal")
+            return firestore.collection(COLLECTION_VIVIANMARCAL)
         }
 
         fun getDocumentTask(document: String): Task<DocumentSnapshot> {

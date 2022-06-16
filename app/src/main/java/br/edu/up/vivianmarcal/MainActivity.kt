@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.ToggleButton
 import br.edu.up.vivianmarcal.model.usuario.TipoUsuario
 import br.edu.up.vivianmarcal.model.usuario.Usuario
-import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,21 +19,9 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
 
-//        try {
-//            if (savedInstanceState == null){
-//                Log.v("App", "LOG: savedInstanceState == null")
-//                usuario = Usuario(5678, "nomeQualquer", TipoUsuario.PAI_ALUNO)
-//            }else{
-//                Log.v("App", "LOG: savedInstanceState != null")
-//                Log.v("App", "LOG: " + usuario.toString())
-//            }
-//        } catch (e: Exception) {
-//            Log.v("App", "ERRO: " + e.message)
-//        }
-
         if (usuario == null){
             Log.v("App", "LOG: setando usuario como PAI")
-            usuario = Usuario(5678, "nomeQualquer", TipoUsuario.PAI_ALUNO)
+            usuario = Usuario(5678.toLong(), "nomeQualquer", TipoUsuario.PAI_ALUNO)
         }
 
         setContentView(R.layout.activity_main)
@@ -57,12 +44,12 @@ class MainActivity : AppCompatActivity() {
                 if (isChecked){
                     Log.v("App", "LOG: isChecked")
 
-                    usuario!!.id = 1234
+                    usuario!!.id = 1234.toLong()
                     usuario!!.tipoUsuario = TipoUsuario.ESCOLA
                 }else{
                     Log.v("App", "LOG: isNotChecked")
 
-                    usuario!!.id = 5678
+                    usuario!!.id = 5678.toLong()
                     usuario!!.tipoUsuario = TipoUsuario.PAI_ALUNO
                 }
             } catch (e: Exception) {
