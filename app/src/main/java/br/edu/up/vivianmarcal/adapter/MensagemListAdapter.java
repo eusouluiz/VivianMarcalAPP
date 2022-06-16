@@ -9,8 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projeto_ds2.R;
-import br.edu.up.vivianmarcal.mensagem.model.Mensagem;
-import br.edu.up.vivianmarcal.mensagem.model.OrigemEnum;
+import br.edu.up.vivianmarcal.model.mensagem.Mensagem;
+import br.edu.up.vivianmarcal.model.mensagem.OrigemEnum;
 
 import java.util.ArrayList;
 

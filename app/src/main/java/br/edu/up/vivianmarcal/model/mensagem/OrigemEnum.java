@@ -1,4 +1,4 @@
-package br.edu.up.vivianmarcal.mensagem.model;
+package br.edu.up.vivianmarcal.model.mensagem;
 
 public enum OrigemEnum {
 

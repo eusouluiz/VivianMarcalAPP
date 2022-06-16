@@ -56,4 +56,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_escola" />
 
+    <ToggleButton
+        android:id="@+id/trocaUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ToggleButton"
+        android:textOff="PAI"
+        android:textOn="ESCOLA"
+        app:layout_constraintBottom_toTopOf="@+id/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

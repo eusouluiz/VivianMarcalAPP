@@ -2,7 +2,7 @@ package br.edu.up.vivianmarcal
 
 import androidx.appcompat.app.AppCompatActivity
 import br.edu.up.vivianmarcal.adapter.MensagemListAdapter
-import br.edu.up.vivianmarcal.mensagem.model.Mensagem
+import br.edu.up.vivianmarcal.model.mensagem.Mensagem
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.edu.up.vivianmarcal.firebase.FirebaseVM
 import com.google.android.material.textfield.TextInputEditText
-import br.edu.up.vivianmarcal.mensagem.model.OrigemEnum
+import br.edu.up.vivianmarcal.model.mensagem.OrigemEnum
+import br.edu.up.vivianmarcal.model.usuario.Usuario
 import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
 import java.util.stream.IntStream.range
@@ -21,11 +22,24 @@ import kotlin.collections.HashMap
 @Suppress("CAST_NEVER_SUCCEEDS")
 class MensagensActivity : AppCompatActivity() {
     var mensagemListAdapter: MensagemListAdapter? = null
+    private var usuario: Usuario? = null
     private val mensagens = ArrayList<Mensagem>()
     var sdf = SimpleDateFormat("HH:mm")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (intent.hasExtra("Usuario")){
+            Log.v("App", "LOG: resgatando usuario")
+            usuario = intent.getSerializableExtra("Usuario") as Usuario?
+
+
+            Log.v("App", "LOG: tipoUsuario: " + usuario!!.tipoUsuario)
+        }else{
+            Log.v("App", "ERRO: usuario nao enviado!")
+            finish()
+        }
+
         setContentView(R.layout.activity_mensagens)
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_mensagens)
         val linearLayoutManager = LinearLayoutManager(this)

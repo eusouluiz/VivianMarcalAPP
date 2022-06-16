@@ -1,91 +1,76 @@
-package br.edu.up.vivianmarcal;
+package br.edu.up.vivianmarcal
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.app.AppCompatActivity
+import br.edu.up.vivianmarcal.model.aviso.Aviso
+import br.edu.up.vivianmarcal.adapter.AvisoListAdapter
+import android.os.Bundle
+import com.example.projeto_ds2.R
+import androidx.recyclerview.widget.RecyclerView
+import br.edu.up.vivianmarcal.adapter.AvisoListAdapter.OnAvisoClickListener
+import androidx.recyclerview.widget.LinearLayoutManager
+import android.content.Intent
+import br.edu.up.vivianmarcal.AdicionarAvisoActivity
+import android.app.Activity
+import android.util.Log
+import android.widget.Button
+import br.edu.up.vivianmarcal.model.usuario.Usuario
+import java.util.ArrayList
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+class AvisoActivity : AppCompatActivity() {
+    private val avisos = ArrayList<Aviso?>()
+    private var usuario: Usuario? = null
+    var avisoListAdapter: AvisoListAdapter? = null
 
-import com.example.projeto_ds2.R;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-import br.edu.up.vivianmarcal.adapter.AvisoListAdapter;
-import br.edu.up.vivianmarcal.model.aviso.Aviso;
+        if (intent.hasExtra("Usuario")){
+            Log.v("App", "LOG: resgatando usuario")
+            usuario = intent.getSerializableExtra("Usuario") as Usuario?
 
-import java.util.ArrayList;
+            Log.v("App", "LOG: tipoUsuario: " + usuario!!.tipoUsuario)
+        }else{
+            Log.v("App", "ERRO: usuario nao enviado!")
+            finish()
+        }
 
-public class AvisoActivity extends AppCompatActivity {
-
-    private ArrayList<Aviso> avisos = new ArrayList<>();
-    AvisoListAdapter avisoListAdapter;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aviso);
-
-        Button buttonAdicionar = findViewById(R.id.button_add);
-
-        buttonAdicionar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callRegisterActivity(null);
-            }
-        });
-
-        RecyclerView recyclerView = findViewById(R.id.recycler_view_avisos);
-
-        avisoListAdapter =
-                new AvisoListAdapter(avisos,
-                        new AvisoListAdapter.OnAvisoClickListener() {
-                            @Override
-                            public void onClick(Aviso aviso) {
-
-                                callRegisterActivity(aviso);
-
-                            }
-                        });
-        recyclerView.setAdapter(avisoListAdapter);
-
-        LinearLayoutManager linearLayoutManager =
-                new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        setContentView(R.layout.activity_aviso)
+        val buttonAdicionar = findViewById<Button>(R.id.button_add)
+        buttonAdicionar.setOnClickListener { callRegisterActivity(null) }
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_avisos)
+        avisoListAdapter = AvisoListAdapter(
+            avisos
+        ) { aviso -> callRegisterActivity(aviso) }
+        recyclerView.adapter = avisoListAdapter
+        val linearLayoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = linearLayoutManager
     }
 
-    public void callRegisterActivity(Aviso aviso){
-
-        Intent intent = new Intent(
-                AvisoActivity.this,
-                AdicionarAvisoActivity.class);
-
-        if(aviso != null){
-            intent.putExtra("aviso",aviso);
-            avisos.remove(aviso);
+    fun callRegisterActivity(aviso: Aviso?) {
+        val intent = Intent(
+            this@AvisoActivity,
+            AdicionarAvisoActivity::class.java
+        )
+        if (aviso != null) {
+            intent.putExtra("aviso", aviso)
+            avisos.remove(aviso)
         }
-
-        startActivityForResult(intent,100);
+        startActivityForResult(intent, 100)
     }
 
-    @Override
-    protected void onActivityResult(int requestCode,
-                                    int resultCode,
-                                    @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == 100 && resultCode == RESULT_OK){
-
-            Aviso aviso = (Aviso) data.getSerializableExtra("aviso");
-            avisos.add(aviso);
-            avisoListAdapter.notifyDataSetChanged();
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            val aviso = data!!.getSerializableExtra("aviso") as Aviso?
+            avisos.add(aviso)
+            avisoListAdapter!!.notifyDataSetChanged()
         }
-
-        if(requestCode == 100 && resultCode == RESULT_CANCELED){
-
-            avisoListAdapter.notifyDataSetChanged();
+        if (requestCode == 100 && resultCode == RESULT_CANCELED) {
+            avisoListAdapter!!.notifyDataSetChanged()
         }
-
     }
 }
