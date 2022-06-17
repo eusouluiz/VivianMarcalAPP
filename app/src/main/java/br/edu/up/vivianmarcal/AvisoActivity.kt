@@ -58,18 +58,6 @@ class AvisoActivity : AppCompatActivity() {
 
         defineAtualizarLista(recyclerView)
 
-//        val campoMensagem = findViewById<TextInputEditText>(R.id.recycler_view_avisos)
-//        campoMensagem.requestFocus()
-        val botaoEnvio = findViewById<Button>(R.id.button_add)
-        botaoEnvio.setOnClickListener {
-            var novaMensagem = Aviso(
-                  avisos.toString()
-            )
-            FirebaseVM.addDataToDocument(FirebaseConstants.AVISOS_DOC, novaMensagem.getHash(), avisos.size)
-
-//            campoMensagem.setText("")
-
-        }
     }
 
     fun callRegisterActivity(aviso: Aviso?) {
@@ -93,6 +81,17 @@ class AvisoActivity : AppCompatActivity() {
         if (requestCode == 100 && resultCode == RESULT_OK) {
             val aviso = data!!.getSerializableExtra("aviso") as Aviso?
             avisos.add(aviso)
+
+
+        val botaoEnvio = findViewById<Button>(R.id.button_posta)
+        botaoEnvio.setOnClickListener {
+            var novoAviso = Aviso(
+                  avisos.toString()
+            )
+            FirebaseVM.addDataToDocument(FirebaseConstants.AVISOS_DOC, novoAviso.getHash(), avisos.size)
+        }
+
+
             avisoListAdapter!!.notifyDataSetChanged()
         }
         if (requestCode == 100 && resultCode == RESULT_CANCELED) {

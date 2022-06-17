@@ -28,7 +28,7 @@ public class AvisoListAdapter extends RecyclerView.Adapter<AvisoListAdapter.Avis
     }
 
     public AvisoListAdapter(@NotNull ArrayList<Aviso> avisos) {
-
+     this.avisos = avisos;
     }
 
 
