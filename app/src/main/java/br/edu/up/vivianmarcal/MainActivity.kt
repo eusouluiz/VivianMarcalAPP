@@ -25,8 +25,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         setContentView(R.layout.activity_main)
-        val b = findViewById<Button>(R.id.button)
-        b.setOnClickListener {
+        val buttonMensagens = findViewById<Button>(R.id.button)
+        buttonMensagens.setOnClickListener {
             val intent = Intent(this@MainActivity, MensagensActivity::class.java)
             intent.putExtra("Usuario", usuario)
             startActivity(intent)

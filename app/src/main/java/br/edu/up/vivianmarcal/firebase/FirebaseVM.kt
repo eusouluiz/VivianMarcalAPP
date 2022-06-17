@@ -21,7 +21,12 @@ class FirebaseVM {
         }
 
         fun addDataToDocument(document: String, data: Any, size: Int){
-            getCollection().document(document).update("mensagem$size", data)
+            if (document.toString().equals("Mensagens")) {
+                getCollection().document(document).update("mensagem$size", data)
+            }
+            if (document.toString().equals("Avisos")) {
+                getCollection().document(document).update("aviso$size", data)
+            }
         }
 
         fun getDocument(document: String): DocumentReference {

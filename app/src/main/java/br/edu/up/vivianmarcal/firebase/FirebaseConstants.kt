@@ -6,4 +6,6 @@ object FirebaseConstants {
     const val MENSAGENS_FIELD_USUARIO = "usuario"
     const val MENSAGENS_FIELD_DATA = "data"
     const val MENSAGENS_FIELD_CORPO = "corpo"
+
+    const val AVISOS_DOC = "Avisos"
 }
