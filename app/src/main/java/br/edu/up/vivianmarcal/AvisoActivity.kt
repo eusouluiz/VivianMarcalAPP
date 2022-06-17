@@ -13,13 +13,24 @@ import br.edu.up.vivianmarcal.AdicionarAvisoActivity
 import android.app.Activity
 import android.util.Log
 import android.widget.Button
+import br.edu.up.vivianmarcal.adapter.MensagemListAdapter
+import br.edu.up.vivianmarcal.firebase.FirebaseConstants
+import br.edu.up.vivianmarcal.firebase.FirebaseVM
+import br.edu.up.vivianmarcal.model.mensagem.Mensagem
+import br.edu.up.vivianmarcal.model.mensagem.OrigemEnum
 import br.edu.up.vivianmarcal.model.usuario.Usuario
+import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.Timestamp
+import java.text.SimpleDateFormat
 import java.util.ArrayList
-
+import java.util.HashMap
+import java.util.stream.IntStream
+@Suppress("CAST_NEVER_SUCCEEDS")
 class AvisoActivity : AppCompatActivity() {
     private val avisos = ArrayList<Aviso?>()
     private var usuario: Usuario? = null
     var avisoListAdapter: AvisoListAdapter? = null
+    var sdf = SimpleDateFormat("HH:mm")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +55,21 @@ class AvisoActivity : AppCompatActivity() {
         recyclerView.adapter = avisoListAdapter
         val linearLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = linearLayoutManager
+
+        defineAtualizarLista(recyclerView)
+
+//        val campoMensagem = findViewById<TextInputEditText>(R.id.recycler_view_avisos)
+//        campoMensagem.requestFocus()
+        val botaoEnvio = findViewById<Button>(R.id.button_add)
+        botaoEnvio.setOnClickListener {
+            var novaMensagem = Aviso(
+                  avisos.toString()
+            )
+            FirebaseVM.addDataToDocument(FirebaseConstants.AVISOS_DOC, novaMensagem.getHash(), avisos.size)
+
+//            campoMensagem.setText("")
+
+        }
     }
 
     fun callRegisterActivity(aviso: Aviso?) {
@@ -71,6 +97,41 @@ class AvisoActivity : AppCompatActivity() {
         }
         if (requestCode == 100 && resultCode == RESULT_CANCELED) {
             avisoListAdapter!!.notifyDataSetChanged()
+        }
+    }
+    private fun defineAtualizarLista(recyclerView: RecyclerView) {
+        val document = FirebaseVM.getDocument(FirebaseConstants.AVISOS_DOC)
+        document.addSnapshotListener { value, error ->
+            if (error != null) {
+                Log.v("App", "ERRO: " + error.printStackTrace())
+            }
+
+            if (value != null) {
+                val documentTask = FirebaseVM.getDocumentTask(FirebaseConstants.AVISOS_DOC)
+
+                documentTask.addOnCompleteListener {
+                    val lista = it.result.data as HashMap<String, Any>
+                    for (i in IntStream.range(avisos.size, lista.size)) {
+                        val aviso = lista[FirebaseConstants.AVISOS_FIELD_MENSAGEM + i] as HashMap<String, Any>
+                        val campoTexto = aviso[FirebaseConstants.AVISOS_FIELD_CORPO] as String
+                        val data = aviso[FirebaseConstants.AVISOS_FIELD_DATA] as Timestamp
+
+
+                            avisos.add(
+                                Aviso(
+                                    campoTexto,
+                                    sdf.format(data.toDate().time)
+                                )
+                            )
+
+                    }
+                    avisoListAdapter = AvisoListAdapter(avisos)
+                    recyclerView.adapter = avisoListAdapter
+
+                }
+
+
+            }
         }
     }
 }

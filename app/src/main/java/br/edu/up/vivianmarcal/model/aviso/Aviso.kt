@@ -1,38 +1,30 @@
-package br.edu.up.vivianmarcal.model.aviso;
+package br.edu.up.vivianmarcal.model.aviso
 
-import java.io.Serializable;
+import br.edu.up.vivianmarcal.firebase.FirebaseConstants
+import com.google.firebase.Timestamp
+import java.io.Serializable
 
+class Aviso : Serializable {
+    var texto: String
+    var hora: String? = null
 
-public class Aviso implements Serializable {
-
-    private static final long serialVersionUID = -5938145431131500078L;
-
-    private String texto;
-
-    private String hora;
-
-    public Aviso(String texto, String hora) {
-        this.texto = texto;
-        this.hora = hora;
+    constructor(texto: String, hora: String?) {
+        this.texto = texto
+        this.hora = hora
     }
 
-    public Aviso(String texto) {
-        this.texto = texto;
+    constructor(texto: String) {
+        this.texto = texto
     }
 
-    public String getTexto() {
-        return texto;
+    fun getHash(): HashMap<String, Any?> {
+        return hashMapOf(
+            FirebaseConstants.AVISOS_FIELD_DATA to Timestamp.now(),
+            FirebaseConstants.AVISOS_FIELD_CORPO to texto
+        )
     }
 
-    public void setTexto(String texto) {
-        this.texto = texto;
-    }
-
-    public String getHora() {
-        return hora;
-    }
-
-    public void setHora(String hora) {
-        this.hora = hora;
+    companion object {
+        private const val serialVersionUID = -5938145431131500078L
     }
 }
