@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import br.edu.up.vivianmarcal.model.aviso.Aviso;
 import com.example.projeto_ds2.R;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class AvisoListAdapter extends RecyclerView.Adapter<AvisoListAdapter.AvisoViewHolder> {
@@ -24,6 +26,11 @@ public class AvisoListAdapter extends RecyclerView.Adapter<AvisoListAdapter.Avis
         this.avisos = avisos;
         this.listener = listener;
     }
+
+//    public AvisoListAdapter(@NotNull ArrayList<Aviso> avisos) {
+//     this.avisos = avisos;
+//    }
+
 
     @NonNull
     @Override
