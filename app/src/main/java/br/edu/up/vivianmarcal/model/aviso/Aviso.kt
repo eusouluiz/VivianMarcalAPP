@@ -21,7 +21,7 @@ class Aviso : Serializable {
 
     fun getHash(): HashMap<String, Any?> {
         return hashMapOf(
-            FirebaseConstants.AVISOS_FIELD_CORPO to toString(),
+            FirebaseConstants.AVISOS_FIELD_CORPO to texto,
             FirebaseConstants.AVISOS_FIELD_DATA to Timestamp.now()
 
         )
