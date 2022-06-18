@@ -5,7 +5,7 @@
     android:id="@+id/text_input_aviso"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/painel_avisos_transparente"
+    android:background="@drawable/tile_background"
     tools:context="br.edu.up.vivianmarcal.AvisoActivity">
 
     <androidx.recyclerview.widget.RecyclerView

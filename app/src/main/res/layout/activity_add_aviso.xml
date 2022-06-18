@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/mensagem_aviso_transparente"
+    android:background="@drawable/tile_background"
     tools:context="br.edu.up.vivianmarcal.AdicionarAvisoActivity">
 
     <com.google.android.material.textfield.TextInputEditText

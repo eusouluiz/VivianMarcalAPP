@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0D0029"
+    android:background="#000D0029"
     tools:context="br.edu.up.vivianmarcal.MainActivity">
 
     <TextView
@@ -15,7 +15,6 @@
         android:text="Assistência à Escola"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#FFFFFF"
         android:textSize="35sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

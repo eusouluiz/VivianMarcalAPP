@@ -1,5 +1,7 @@
 package br.edu.up.vivianmarcal
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import br.edu.up.vivianmarcal.adapter.MensagemListAdapter
 import br.edu.up.vivianmarcal.model.mensagem.Mensagem
@@ -30,13 +32,13 @@ class MensagensActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (intent.hasExtra("Usuario")){
+        if (intent.hasExtra("Usuario")) {
             Log.v("App", "LOG: resgatando usuario")
             usuario = intent.getSerializableExtra("Usuario") as Usuario?
 
 
             Log.v("App", "LOG: tipoUsuario: " + usuario!!.tipoUsuario)
-        }else{
+        } else {
             Log.v("App", "ERRO: usuario nao enviado!")
             finish()
         }
@@ -56,7 +58,11 @@ class MensagensActivity : AppCompatActivity() {
             var novaMensagem = Mensagem(
                 usuario, campoMensagem.text.toString()
             )
-            FirebaseVM.addDataToDocument(FirebaseConstants.MENSAGENS_DOC, novaMensagem.getHash(), mensagens.size)
+            FirebaseVM.addDataToDocument(
+                FirebaseConstants.MENSAGENS_DOC,
+                novaMensagem.getHash(),
+                mensagens.size
+            )
 
             campoMensagem.setText("")
 
@@ -76,9 +82,11 @@ class MensagensActivity : AppCompatActivity() {
                 documentTask.addOnCompleteListener {
                     val lista = it.result.data as HashMap<String, Any>
                     for (i in range(mensagens.size, lista.size)) {
-                        val mensagem = lista[FirebaseConstants.MENSAGENS_FIELD_MENSAGEM + i] as HashMap<String, Any>
+                        val mensagem =
+                            lista[FirebaseConstants.MENSAGENS_FIELD_MENSAGEM + i] as HashMap<String, Any>
                         val campoTexto = mensagem[FirebaseConstants.MENSAGENS_FIELD_CORPO] as String
-                        val usuarioFB = mensagem[FirebaseConstants.MENSAGENS_FIELD_USUARIO] as HashMap<String, Any>
+                        val usuarioFB =
+                            mensagem[FirebaseConstants.MENSAGENS_FIELD_USUARIO] as HashMap<String, Any>
                         val data = mensagem[FirebaseConstants.MENSAGENS_FIELD_DATA] as Timestamp
 
                         if (usuarioFB["id"] == usuario!!.id) {
