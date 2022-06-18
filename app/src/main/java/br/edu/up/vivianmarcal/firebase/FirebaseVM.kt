@@ -21,7 +21,7 @@ class FirebaseVM {
             return docTask.get()
         }
 
-        fun addDataToDocument(document: String, data: Any, size: Int){
+        fun addDataToDocument(document: String, data: Any, size: Int) {
             if (document.toString().equals("Mensagens")) {
                 getCollection().document(document).update("mensagem$size", data)
             }

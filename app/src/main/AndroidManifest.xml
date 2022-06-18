@@ -17,7 +17,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name="br.edu.up.vivianmarcal.MensagensActivity"
-            android:windowSoftInputMode="stateVisible|adjustPan"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity

@@ -11,9 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.content.Intent
 import br.edu.up.vivianmarcal.AdicionarAvisoActivity
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.text.InputType
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import androidx.core.view.isVisible
 import br.edu.up.vivianmarcal.adapter.MensagemListAdapter
 import br.edu.up.vivianmarcal.firebase.FirebaseConstants
@@ -66,7 +70,7 @@ class AvisoActivity : AppCompatActivity() {
     }
 
     fun callRegisterActivity(aviso: Aviso?) {
-        val intent = Intent(
+        /*val intent = Intent(
             this@AvisoActivity,
             AdicionarAvisoActivity::class.java
         )
@@ -74,7 +78,14 @@ class AvisoActivity : AppCompatActivity() {
             intent.putExtra("aviso", aviso)
             avisos.remove(aviso)
         }
-        startActivityForResult(intent, 100)
+        startActivityForResult(intent, 100)*/
+
+        if (aviso != null){
+            registerDialogStart(aviso)
+        } else {
+            registerDialogStart(null)
+        }
+
     }
 
     override fun onActivityResult(
@@ -96,6 +107,32 @@ class AvisoActivity : AppCompatActivity() {
         if (requestCode == 100 && resultCode == RESULT_CANCELED) {
             avisoListAdapter!!.notifyDataSetChanged()
         }
+    }
+
+    private fun registerDialogStart(aviso: Aviso?){
+        val builder = AlertDialog.Builder(this)
+        val input = EditText(this)
+        input.inputType = InputType.TYPE_CLASS_TEXT
+
+        if (aviso != null){
+            input.setText(aviso.texto)
+        }
+
+        builder.setView(input)
+
+        builder.setTitle("Aviso")
+        builder.setMessage("Insira o aviso:")
+
+        builder.setPositiveButton("Adicionar") { dialog, which ->
+            var aviso = Aviso(input.text.toString())
+            FirebaseVM.addDataToDocument(
+                FirebaseConstants.AVISOS_DOC,
+                aviso.getHash(),
+                avisos.size
+            )
+        }
+        builder.setNegativeButton("Cancelar") { dialog, which -> dialog.cancel() }
+        builder.show()
     }
 
     private fun defineAtualizarLista(recyclerView: RecyclerView) {
