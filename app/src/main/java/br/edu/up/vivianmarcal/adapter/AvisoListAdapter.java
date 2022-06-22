@@ -3,13 +3,18 @@ package br.edu.up.vivianmarcal.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import br.edu.up.vivianmarcal.model.aviso.Aviso;
+import br.edu.up.vivianmarcal.model.mensagem.OrigemEnum;
+import br.edu.up.vivianmarcal.model.usuario.TipoUsuario;
+
 import com.example.projeto_ds2.R;
+import br.edu.up.vivianmarcal.model.usuario.Usuario;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -27,27 +32,23 @@ public class AvisoListAdapter extends RecyclerView.Adapter<AvisoListAdapter.Avis
         this.listener = listener;
     }
 
-//    public AvisoListAdapter(@NotNull ArrayList<Aviso> avisos) {
-//     this.avisos = avisos;
-//    }
-
-
     @NonNull
     @Override
     public AvisoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        LayoutInflater layoutInflater =
-                LayoutInflater.from(parent.getContext());
+        View layout;
 
-        View layout =
-                layoutInflater.inflate(R.layout.view_aviso,
-                        parent,
-                        false);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        layout = layoutInflater.inflate(R.layout.view_aviso, parent, false);
 
         AvisoViewHolder avisoViewHolder =
                 new AvisoViewHolder(layout);
 
         return avisoViewHolder;
+    }
+
+    public int getItemViewType(int position) {
+        return avisos.get(position).getOrigem().getId();
     }
 
     @Override
@@ -89,7 +90,6 @@ public class AvisoListAdapter extends RecyclerView.Adapter<AvisoListAdapter.Avis
 
                 }
             });
-
         }
     }
 
@@ -98,3 +98,4 @@ public class AvisoListAdapter extends RecyclerView.Adapter<AvisoListAdapter.Avis
     }
 
 }
+

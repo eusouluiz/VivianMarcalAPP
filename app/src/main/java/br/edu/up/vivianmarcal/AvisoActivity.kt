@@ -6,11 +6,8 @@ import br.edu.up.vivianmarcal.adapter.AvisoListAdapter
 import android.os.Bundle
 import com.example.projeto_ds2.R
 import androidx.recyclerview.widget.RecyclerView
-import br.edu.up.vivianmarcal.adapter.AvisoListAdapter.OnAvisoClickListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.content.Intent
-import br.edu.up.vivianmarcal.AdicionarAvisoActivity
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.text.InputType
@@ -39,7 +36,7 @@ class AvisoActivity : AppCompatActivity() {
     private val avisos = ArrayList<Aviso?>()
     private var usuario: Usuario? = null
     var avisoListAdapter: AvisoListAdapter? = null
-    var sdf = SimpleDateFormat("HH:mm")
+    var sdf = SimpleDateFormat("dd/MM HH:mm")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,53 +51,46 @@ class AvisoActivity : AppCompatActivity() {
             finish()
         }
 
-        setContentView(R.layout.activity_aviso)
-        val buttonAdicionar = findViewById<Button>(R.id.button_add)
+
         if (usuario!!.tipoUsuario == TipoUsuario.ESCOLA) {
+            setContentView(R.layout.activity_aviso)
+            val buttonAdicionar = findViewById<Button>(R.id.button_add)
             buttonAdicionar.setOnClickListener { callRegisterActivity(null) }
-        }else{
-            buttonAdicionar.visibility = View.GONE
+            val buttonRemover = findViewById<Button>(R.id.button_remove)
+            buttonRemover.setOnClickListener { callRegisterActivity(null) }
+        } else {
+            setContentView(R.layout.activity_aviso_pai)
         }
+
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_avisos)
         val linearLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = linearLayoutManager
 
         defineAtualizarLista(recyclerView)
-
     }
 
     fun callRegisterActivity(aviso: Aviso?) {
-        /*val intent = Intent(
-            this@AvisoActivity,
-            AdicionarAvisoActivity::class.java
-        )
-        if (aviso != null) {
-            intent.putExtra("aviso", aviso)
-            avisos.remove(aviso)
-        }
-        startActivityForResult(intent, 100)*/
 
-        if (aviso != null){
+        if (aviso != null) {
             registerDialogStart(aviso)
         } else {
             registerDialogStart(null)
         }
-
     }
 
     override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?
+            requestCode: Int,
+            resultCode: Int,
+            data: Intent?
     ) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 100 && resultCode == RESULT_OK) {
             val aviso = data!!.getSerializableExtra("aviso") as Aviso
 
             FirebaseVM.addDataToDocument(
-                FirebaseConstants.AVISOS_DOC,
-                aviso.getHash(),
-                avisos.size
+                    FirebaseConstants.AVISOS_DOC,
+                    aviso.getHash(),
+                    avisos.size
             )
             avisoListAdapter!!.notifyDataSetChanged()
         }
@@ -109,31 +99,31 @@ class AvisoActivity : AppCompatActivity() {
         }
     }
 
-    private fun registerDialogStart(aviso: Aviso?){
+    private fun registerDialogStart(aviso: Aviso?) {
+
         val builder = AlertDialog.Builder(this)
         val input = EditText(this)
         input.inputType = InputType.TYPE_CLASS_TEXT
 
-        if (aviso != null){
+        if (aviso != null) {
             input.setText(aviso.texto)
         }
 
         builder.setView(input)
-
         builder.setTitle("Aviso")
         builder.setMessage("Insira o aviso:")
-
         builder.setPositiveButton("Adicionar") { dialog, which ->
-            var aviso = Aviso(input.text.toString())
+            var aviso = Aviso(input.text.toString(), usuario)
             FirebaseVM.addDataToDocument(
-                FirebaseConstants.AVISOS_DOC,
-                aviso.getHash(),
-                avisos.size
+                    FirebaseConstants.AVISOS_DOC,
+                    aviso.getHash(),
+                    avisos.size
             )
         }
         builder.setNegativeButton("Cancelar") { dialog, which -> dialog.cancel() }
         builder.show()
     }
+
 
     private fun defineAtualizarLista(recyclerView: RecyclerView) {
         val document = FirebaseVM.getDocument(FirebaseConstants.AVISOS_DOC)
@@ -149,31 +139,55 @@ class AvisoActivity : AppCompatActivity() {
                     val lista = it.result.data as HashMap<String, Any>
                     for (i in range(avisos.size, lista.size)) {
                         val aviso =
-                            lista[FirebaseConstants.AVISOS_FIELD_MENSAGEM + i] as HashMap<String, Any>
-                        val campoTexto = aviso[FirebaseConstants.AVISOS_FIELD_CORPO] as String
-                        val data = aviso[FirebaseConstants.AVISOS_FIELD_DATA] as Timestamp
+                                lista[FirebaseConstants.AVISOS_FIELD_MENSAGEM + i] as HashMap<String, Any>?
+                        val campoTexto = aviso?.get(FirebaseConstants.AVISOS_FIELD_CORPO) as String?
+                        val data = aviso?.get(FirebaseConstants.AVISOS_FIELD_DATA) as Timestamp?
+                        val usuarioFB =
+                                aviso?.get(FirebaseConstants.AVISOS_FIELD_USUARIO) as HashMap<String, Any>
 
+                        if (usuarioFB["id"] == usuario!!.id) {
+                            if (data != null) {
+                                avisos.add(
+                                        campoTexto?.let { it1 ->
+                                            Aviso(
+                                                    it1,
+                                                    sdf.format(data.toDate().time),
+                                                    OrigemEnum.Remetente
 
-                        avisos.add(
-                            Aviso(
-                                campoTexto,
-                                sdf.format(data.toDate().time)
-                            )
-                        )
+                                            )
+                                        }
+                                )
 
-                    }
-                    avisoListAdapter = AvisoListAdapter(
-                        avisos
-                    ) { aviso ->
-                        if (usuario!!.tipoUsuario == TipoUsuario.ESCOLA) {
-                            callRegisterActivity(aviso)
+                            }
+
+                        } else {
+                            if (data != null) {
+                                avisos.add(
+                                        campoTexto?.let { it1 ->
+                                            Aviso(
+                                                    it1,
+                                                    sdf.format(data.toDate().time),
+                                                    OrigemEnum.Destinatario
+
+                                            )
+                                        }
+                                )
+
+                            }
                         }
+                        avisoListAdapter = AvisoListAdapter(
+                                avisos
+                        ) { aviso ->
+                            if (usuario!!.tipoUsuario == TipoUsuario.ESCOLA) {
+                                callRegisterActivity(aviso)
+                            }
+                        }
+                        recyclerView.adapter = avisoListAdapter
+
                     }
-                    recyclerView.adapter = avisoListAdapter
+
 
                 }
-
-
             }
         }
     }
