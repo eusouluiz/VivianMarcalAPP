@@ -37,10 +37,14 @@ public class AvisoListAdapter extends RecyclerView.Adapter<AvisoListAdapter.Avis
     public AvisoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View layout;
-
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        layout = layoutInflater.inflate(R.layout.view_aviso, parent, false);
-
+        if (viewType == OrigemEnum.Remetente.getId()) {
+            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+            layout = layoutInflater.inflate(R.layout.view_aviso, parent, false);
+        }
+        else {
+            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+            layout = layoutInflater.inflate(R.layout.view_aviso_pai, parent, false);
+        }
         AvisoViewHolder avisoViewHolder =
                 new AvisoViewHolder(layout);
 
