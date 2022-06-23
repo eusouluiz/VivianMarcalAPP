@@ -1,5 +1,6 @@
 package br.edu.up.vivianmarcal.adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,14 +38,10 @@ public class AvisoListAdapter extends RecyclerView.Adapter<AvisoListAdapter.Avis
     public AvisoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View layout;
-        if (viewType == OrigemEnum.Remetente.getId()) {
-            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-            layout = layoutInflater.inflate(R.layout.view_aviso, parent, false);
-        }
-        else {
-            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-            layout = layoutInflater.inflate(R.layout.view_aviso_pai, parent, false);
-        }
+
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        layout = layoutInflater.inflate(R.layout.view_aviso, parent, false);
+
         AvisoViewHolder avisoViewHolder =
                 new AvisoViewHolder(layout);
 
@@ -55,6 +52,7 @@ public class AvisoListAdapter extends RecyclerView.Adapter<AvisoListAdapter.Avis
         return avisos.get(position).getOrigem().getId();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull AvisoViewHolder holder,
                                  int position) {
@@ -70,6 +68,11 @@ public class AvisoListAdapter extends RecyclerView.Adapter<AvisoListAdapter.Avis
                 findViewById(R.id.time_aviso);
 
         timeTextViewAviso.setText(aviso.getHora());
+
+        TextView idTextViewAviso = holder.itemView.
+                findViewById(R.id.id_aviso);
+
+        idTextViewAviso.setText("" + aviso.getIdentificacao());
 
     }
 

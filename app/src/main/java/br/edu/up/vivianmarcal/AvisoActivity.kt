@@ -1,5 +1,6 @@
 package br.edu.up.vivianmarcal
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import br.edu.up.vivianmarcal.model.aviso.Aviso
 import br.edu.up.vivianmarcal.adapter.AvisoListAdapter
@@ -9,26 +10,19 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.content.Intent
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.text.InputType
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import androidx.core.view.isVisible
-import br.edu.up.vivianmarcal.adapter.MensagemListAdapter
 import br.edu.up.vivianmarcal.firebase.FirebaseConstants
 import br.edu.up.vivianmarcal.firebase.FirebaseVM
-import br.edu.up.vivianmarcal.model.mensagem.Mensagem
 import br.edu.up.vivianmarcal.model.mensagem.OrigemEnum
 import br.edu.up.vivianmarcal.model.usuario.TipoUsuario
 import br.edu.up.vivianmarcal.model.usuario.Usuario
-import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
 import java.util.ArrayList
 import java.util.HashMap
-import java.util.stream.IntStream
 import java.util.stream.IntStream.range
 
 @Suppress("CAST_NEVER_SUCCEEDS")
@@ -37,6 +31,7 @@ class AvisoActivity : AppCompatActivity() {
     private var usuario: Usuario? = null
     var avisoListAdapter: AvisoListAdapter? = null
     var sdf = SimpleDateFormat("dd/MM HH:mm")
+    var cont: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +52,7 @@ class AvisoActivity : AppCompatActivity() {
             val buttonAdicionar = findViewById<Button>(R.id.button_add)
             buttonAdicionar.setOnClickListener { callRegisterActivity(null) }
             val buttonRemover = findViewById<Button>(R.id.button_remove)
-            buttonRemover.setOnClickListener { callRegisterActivity(null) }
+            buttonRemover.setOnClickListener { callRemoverActivity(null) }
         } else {
             setContentView(R.layout.activity_aviso_pai)
         }
@@ -72,9 +67,22 @@ class AvisoActivity : AppCompatActivity() {
     fun callRegisterActivity(aviso: Aviso?) {
 
         if (aviso != null) {
-            registerDialogStart(aviso)
+            cont++
+            registerDialogStart(aviso, cont)
         } else {
-            registerDialogStart(null)
+            cont++
+            registerDialogStart(null, cont)
+        }
+    }
+
+    fun callRemoverActivity(aviso: Aviso?) {
+
+        if (aviso != null) {
+            cont++
+            RemoveDialogStart(aviso, cont)
+        } else {
+            cont++
+            RemoveDialogStart(null, cont)
         }
     }
 
@@ -99,7 +107,7 @@ class AvisoActivity : AppCompatActivity() {
         }
     }
 
-    private fun registerDialogStart(aviso: Aviso?) {
+    private fun registerDialogStart(aviso: Aviso?, cont: Long) {
 
         val builder = AlertDialog.Builder(this)
         val input = EditText(this)
@@ -113,7 +121,7 @@ class AvisoActivity : AppCompatActivity() {
         builder.setTitle("Aviso")
         builder.setMessage("Insira o aviso:")
         builder.setPositiveButton("Adicionar") { dialog, which ->
-            var aviso = Aviso(input.text.toString(), usuario)
+            var aviso = Aviso(input.text.toString(), usuario, cont)
             FirebaseVM.addDataToDocument(
                     FirebaseConstants.AVISOS_DOC,
                     aviso.getHash(),
@@ -124,6 +132,31 @@ class AvisoActivity : AppCompatActivity() {
         builder.show()
     }
 
+    @SuppressLint("SetTextI18n")
+    private fun RemoveDialogStart(aviso: Aviso?, cont: Long) {
+
+        val builder = AlertDialog.Builder(this)
+        val input = EditText(this)
+        input.inputType = InputType.TYPE_CLASS_TEXT
+
+        if (aviso != null) {
+            input.setText("" + aviso.texto)
+        }
+
+        builder.setView(input)
+        builder.setTitle("Remover")
+        builder.setMessage("Insira a identificação do aviso:")
+        builder.setPositiveButton("Remover") { dialog, which ->
+            var aviso = Aviso(input.text.toString(), usuario, cont)
+            FirebaseVM.addDataToDocument(
+                    FirebaseConstants.AVISOS_DOC,
+                    aviso.getHash(),
+                    avisos.size
+            )
+        }
+        builder.setNegativeButton("Cancelar") { dialog, which -> dialog.cancel() }
+        builder.show()
+    }
 
     private fun defineAtualizarLista(recyclerView: RecyclerView) {
         val document = FirebaseVM.getDocument(FirebaseConstants.AVISOS_DOC)
@@ -144,6 +177,7 @@ class AvisoActivity : AppCompatActivity() {
                         val data = aviso?.get(FirebaseConstants.AVISOS_FIELD_DATA) as Timestamp?
                         val usuarioFB =
                                 aviso?.get(FirebaseConstants.AVISOS_FIELD_USUARIO) as HashMap<String, Any>
+                        val id = aviso?.get(FirebaseConstants.AVISOS_FIELD_IDENTIFICACAO) as Long
 
                         if (usuarioFB["id"] == usuario!!.id) {
                             if (data != null) {
@@ -152,7 +186,8 @@ class AvisoActivity : AppCompatActivity() {
                                             Aviso(
                                                     it1,
                                                     sdf.format(data.toDate().time),
-                                                    OrigemEnum.Remetente
+                                                    OrigemEnum.Remetente,
+                                                    id
 
                                             )
                                         }
@@ -167,7 +202,8 @@ class AvisoActivity : AppCompatActivity() {
                                             Aviso(
                                                     it1,
                                                     sdf.format(data.toDate().time),
-                                                    OrigemEnum.Destinatario
+                                                    OrigemEnum.Destinatario,
+                                                    id
 
                                             )
                                         }
@@ -192,3 +228,4 @@ class AvisoActivity : AppCompatActivity() {
         }
     }
 }
+
