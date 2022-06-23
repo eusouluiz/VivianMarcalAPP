@@ -31,7 +31,6 @@ class AvisoActivity : AppCompatActivity() {
     private var usuario: Usuario? = null
     var avisoListAdapter: AvisoListAdapter? = null
     var sdf = SimpleDateFormat("dd/MM HH:mm")
-    var cont: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,11 +65,10 @@ class AvisoActivity : AppCompatActivity() {
 
     fun callRegisterActivity(aviso: Aviso?) {
 
+        var cont: Long = (100..999).random().toLong()
         if (aviso != null) {
-            cont++
             registerDialogStart(aviso, cont)
         } else {
-            cont++
             registerDialogStart(null, cont)
         }
     }
@@ -78,11 +76,9 @@ class AvisoActivity : AppCompatActivity() {
     fun callRemoverActivity(aviso: Aviso?) {
 
         if (aviso != null) {
-            cont++
-            RemoveDialogStart(aviso, cont)
+            RemoveDialogStart(aviso)
         } else {
-            cont++
-            RemoveDialogStart(null, cont)
+            RemoveDialogStart(null)
         }
     }
 
@@ -133,7 +129,7 @@ class AvisoActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun RemoveDialogStart(aviso: Aviso?, cont: Long) {
+    private fun RemoveDialogStart(aviso: Aviso?) {
 
         val builder = AlertDialog.Builder(this)
         val input = EditText(this)
@@ -147,12 +143,7 @@ class AvisoActivity : AppCompatActivity() {
         builder.setTitle("Remover")
         builder.setMessage("Insira a identificação do aviso:")
         builder.setPositiveButton("Remover") { dialog, which ->
-            var aviso = Aviso(input.text.toString(), usuario, cont)
-            FirebaseVM.addDataToDocument(
-                    FirebaseConstants.AVISOS_DOC,
-                    aviso.getHash(),
-                    avisos.size
-            )
+            //funcao para removoção de acordo com o id que digitar
         }
         builder.setNegativeButton("Cancelar") { dialog, which -> dialog.cancel() }
         builder.show()
