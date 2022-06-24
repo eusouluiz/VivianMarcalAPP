@@ -4,20 +4,15 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import br.edu.up.vivianmarcal.model.aviso.Aviso;
-import br.edu.up.vivianmarcal.model.mensagem.OrigemEnum;
-import br.edu.up.vivianmarcal.model.usuario.TipoUsuario;
 
 import com.example.projeto_ds2.R;
-import br.edu.up.vivianmarcal.model.usuario.Usuario;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -28,7 +23,7 @@ public class AvisoListAdapter extends RecyclerView.Adapter<AvisoListAdapter.Avis
     private OnAvisoClickListener listener;
 
     public AvisoListAdapter(ArrayList<Aviso> avisos,
-                           OnAvisoClickListener listener){
+                            OnAvisoClickListener listener) {
         this.avisos = avisos;
         this.listener = listener;
     }
@@ -42,14 +37,7 @@ public class AvisoListAdapter extends RecyclerView.Adapter<AvisoListAdapter.Avis
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         layout = layoutInflater.inflate(R.layout.view_aviso, parent, false);
 
-        AvisoViewHolder avisoViewHolder =
-                new AvisoViewHolder(layout);
-
-        return avisoViewHolder;
-    }
-
-    public int getItemViewType(int position) {
-        return avisos.get(position).getOrigem().getId();
+        return new AvisoViewHolder(layout);
     }
 
     @SuppressLint("SetTextI18n")
@@ -57,22 +45,21 @@ public class AvisoListAdapter extends RecyclerView.Adapter<AvisoListAdapter.Avis
     public void onBindViewHolder(@NonNull AvisoViewHolder holder,
                                  int position) {
 
-        Aviso aviso = avisos.get(position);
+        if (Boolean.TRUE.equals(avisos.get(position).getAtivo())) {
+            Aviso aviso = avisos.get(position);
 
-        TextView textViewAviso = holder.itemView.
-                findViewById(R.id.text_aviso);
+            TextView textViewAviso = holder.itemView.
+                    findViewById(R.id.text_aviso);
 
-        textViewAviso.setText(aviso.getTexto());
+            textViewAviso.setText(aviso.getTexto());
 
-        TextView timeTextViewAviso = holder.itemView.
-                findViewById(R.id.time_aviso);
+            TextView timeTextViewAviso = holder.itemView.
+                    findViewById(R.id.time_aviso);
 
-        timeTextViewAviso.setText(aviso.getHora());
-
-        TextView idTextViewAviso = holder.itemView.
-                findViewById(R.id.id_aviso);
-
-        idTextViewAviso.setText("" + aviso.getIdentificacao());
+            timeTextViewAviso.setText(aviso.getHora());
+        } else {
+            holder.itemView.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        }
 
     }
 
@@ -82,7 +69,7 @@ public class AvisoListAdapter extends RecyclerView.Adapter<AvisoListAdapter.Avis
     }
 
     public class AvisoViewHolder
-            extends RecyclerView.ViewHolder{
+            extends RecyclerView.ViewHolder {
 
         public AvisoViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -100,7 +87,7 @@ public class AvisoListAdapter extends RecyclerView.Adapter<AvisoListAdapter.Avis
         }
     }
 
-    public interface OnAvisoClickListener{
+    public interface OnAvisoClickListener {
         void onClick(Aviso aviso);
     }
 

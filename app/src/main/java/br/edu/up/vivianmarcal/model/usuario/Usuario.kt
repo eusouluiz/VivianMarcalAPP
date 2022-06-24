@@ -28,5 +28,12 @@ class Usuario : Serializable {
 
     companion object {
         private const val serialVersionUID = 5500378251488245594L
+
+        fun hashAsUsuario(hash: HashMap<String, Any?>): Usuario{
+            val id = hash["id"] as Number
+            val nome = hash["nome"] as String
+            val tipoUsuario = hash["tipoUsuario"] as String
+            return Usuario(id, nome, tipoUsuario)
+        }
     }
 }

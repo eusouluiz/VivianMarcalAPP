@@ -10,27 +10,26 @@ import java.io.Serializable
 import kotlin.collections.ArrayList
 
 class Aviso : Serializable {
-    lateinit var texto: String
+    var texto: String? = null
     var hora: String? = null
-    var origem: OrigemEnum? = null
     var usuario: Usuario? = null
-    var identificacao: Long
+    var id: Number? = null
+    var ativo: Boolean? = null
 
-    constructor(texto: String, hora: String?, origem: OrigemEnum?, identificacao: Long) {
-        this.texto = texto
-        this.hora = hora
-        this.origem = origem
-        this.identificacao = identificacao
-    }
 
-    constructor(texto: String, usuario: Usuario?, identificacao: Long) {
+    constructor(texto: String?, usuario: Usuario?, id: Number?, ativo: Boolean?) {
         this.texto = texto
         this.usuario = usuario
-        this.identificacao = identificacao
+        this.id = id
+        this.ativo = ativo
     }
 
-    constructor(identificacao: Long) {
-        this.identificacao = identificacao
+    constructor(texto: String?, hora: String?, usuarioHash: HashMap<String, Any?>, id: Number?, ativo: Boolean?) {
+        this.texto = texto
+        this.hora = hora
+        this.usuario = Usuario.hashAsUsuario(usuarioHash)
+        this.id = id
+        this.ativo = ativo
     }
 
 
@@ -39,7 +38,8 @@ class Aviso : Serializable {
             FirebaseConstants.AVISOS_FIELD_CORPO to texto,
             FirebaseConstants.AVISOS_FIELD_DATA to Timestamp.now(),
             FirebaseConstants.AVISOS_FIELD_USUARIO to usuario!!.getHash(),
-            FirebaseConstants.AVISOS_FIELD_IDENTIFICACAO to identificacao
+            FirebaseConstants.AVISOS_FIELD_ID to id,
+            FirebaseConstants.AVISOS_FIELD_ATIVO to ativo
 
         )
     }

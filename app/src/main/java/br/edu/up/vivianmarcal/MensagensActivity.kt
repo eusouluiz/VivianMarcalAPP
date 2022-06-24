@@ -27,7 +27,7 @@ class MensagensActivity : AppCompatActivity() {
     var mensagemListAdapter: MensagemListAdapter? = null
     private var usuario: Usuario? = null
     private val mensagens = ArrayList<Mensagem>()
-    var sdf = SimpleDateFormat("HH:mm")
+    var sdf = SimpleDateFormat("dd/MM HH:mm")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
