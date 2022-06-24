@@ -2,7 +2,7 @@
 <bitmap
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:src="@drawable/main_bg"
-    android:alpha="0.4"
+    android:alpha="0.25"
     android:scaleType="fitXY"
     android:dither="true"
     android:tileMode="mirror"

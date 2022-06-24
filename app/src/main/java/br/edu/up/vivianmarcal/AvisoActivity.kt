@@ -21,9 +21,9 @@ import br.edu.up.vivianmarcal.model.usuario.TipoUsuario
 import br.edu.up.vivianmarcal.model.usuario.Usuario
 import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
-import java.util.ArrayList
 import java.util.HashMap
 import java.util.stream.IntStream.range
+import kotlin.collections.ArrayList
 
 @Suppress("CAST_NEVER_SUCCEEDS")
 class AvisoActivity : AppCompatActivity() {
@@ -139,21 +139,23 @@ class AvisoActivity : AppCompatActivity() {
                 documentTask.addOnCompleteListener {
                     val lista = it.result.data as HashMap<String, Any>
                     for (i in range(avisos.size, lista.size)) {
-                        val aviso = lista[FirebaseConstants.AVISOS_FIELD_MENSAGEM + i] as HashMap<String, Any>
+                        val aviso =
+                            lista[FirebaseConstants.AVISOS_FIELD_MENSAGEM + i] as HashMap<String, Any>
                         val campoTexto = aviso[FirebaseConstants.AVISOS_FIELD_CORPO] as String
                         val data = aviso[FirebaseConstants.AVISOS_FIELD_DATA] as Timestamp
-                        val usuarioFB = aviso[FirebaseConstants.AVISOS_FIELD_USUARIO] as HashMap<String, Any?>
+                        val usuarioFB =
+                            aviso[FirebaseConstants.AVISOS_FIELD_USUARIO] as HashMap<String, Any?>
                         val id = aviso[FirebaseConstants.AVISOS_FIELD_ID] as Number
                         val ativo = aviso[FirebaseConstants.AVISOS_FIELD_ATIVO] as Boolean
 
                         avisos.add(
-                                Aviso(
-                                    campoTexto,
-                                    sdf.format(data.toDate().time),
-                                    usuarioFB,
-                                    id,
-                                    ativo
-                                )
+                            Aviso(
+                                campoTexto,
+                                sdf.format(data.toDate().time),
+                                usuarioFB,
+                                id,
+                                ativo
+                            )
                         )
 
                     }
