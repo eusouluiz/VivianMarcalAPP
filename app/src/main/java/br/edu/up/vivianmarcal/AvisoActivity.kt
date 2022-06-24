@@ -25,7 +25,7 @@ import kotlin.collections.ArrayList
 
 @Suppress("CAST_NEVER_SUCCEEDS")
 class AvisoActivity : AppCompatActivity() {
-    private val avisos = ArrayList<Aviso?>()
+    private var avisos = ArrayList<Aviso?>()
     private var usuario: Usuario? = null
     var avisoListAdapter: AvisoListAdapter? = null
 
@@ -135,6 +135,9 @@ class AvisoActivity : AppCompatActivity() {
 
                 documentTask.addOnCompleteListener {
                     val lista = it.result.data as HashMap<String, Any>
+                    if(lista.size == avisos.size){
+                        avisos = ArrayList()
+                    }
                     for (i in range(avisos.size, lista.size)) {
                         val aviso =
                             lista[FirebaseConstants.AVISOS_FIELD_MENSAGEM + i] as HashMap<String, Any>
