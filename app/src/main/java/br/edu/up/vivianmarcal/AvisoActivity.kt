@@ -42,7 +42,7 @@ class AvisoActivity : AppCompatActivity() {
             finish()
         }
 
-
+        //TESTA O USUÁRIO ANTES DE HABILITAR O BOTÃO ADICIONAR, SE FOR ESCOLA DEIXA HABILITADO, CASO CONTRÁRIO NÃO
         setContentView(R.layout.activity_aviso)
         val buttonAdicionar = findViewById<Button>(R.id.button_add)
         if (usuario!!.tipoUsuario == TipoUsuario.ESCOLA) {
@@ -54,7 +54,7 @@ class AvisoActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_avisos)
         val linearLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = linearLayoutManager
-
+        //CHAMA A FUNÇÃO PARA CARREGAR A LISTA DO FIREBASE
         defineAtualizarLista(recyclerView)
     }
 
@@ -65,7 +65,7 @@ class AvisoActivity : AppCompatActivity() {
             registerDialogStart(null)
         }
     }
-
+    //FUNÇÃO PARA ENVIAR AS INFORMAÇÕES PARA O FIREBASE
     private fun atualizarAvisosFB(aviso: Aviso, id: Int){
         FirebaseVM.addDataToDocument(
             FirebaseConstants.AVISOS_DOC,
@@ -82,8 +82,8 @@ class AvisoActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 100 && resultCode == RESULT_OK) {
             val aviso = data!!.getSerializableExtra("aviso") as Aviso
-
-            atualizarAvisosFB(aviso, avisos.size)
+            //RECEBE AS INFORMAÇÕES
+            atualizarAvisosFB(aviso, avisos.size) //-> CHAMA A FUNÇÃO PARA SALVAR NO FIREBASE
             avisoListAdapter!!.notifyDataSetChanged()
         }
         if (requestCode == 100 && resultCode == RESULT_CANCELED) {
@@ -96,7 +96,7 @@ class AvisoActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         val input = EditText(this)
         input.inputType = InputType.TYPE_CLASS_TEXT
-
+        //BOTÃO REMOVER & ALTERAR
         if (aviso != null) {
             input.setText(aviso.texto)
             builder.setNeutralButton("Remover"){_, _ ->
@@ -156,12 +156,15 @@ class AvisoActivity : AppCompatActivity() {
                         )
 
                     }
+                    //ORGANIZA DE FORMA DECRESCENTE
+                    //COLOCA NO ADAPTER
                     avisos.sortByDescending { it!!.data }
                     avisoListAdapter = AvisoListAdapter(
                         avisos
                     ) { aviso ->
                         if (usuario!!.tipoUsuario == TipoUsuario.ESCOLA) {
                             callRegisterActivity(aviso)
+                            //TESTA O USUÁRIO SE FOR ESCOLA HABILITA CLICAR NOS AVISOS, CASO CONTRÁRIO NÃO
                         }
                     }
                     recyclerView.adapter = avisoListAdapter

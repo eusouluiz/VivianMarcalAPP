@@ -12,7 +12,6 @@ object FirebaseConstants {
     const val AVISOS_FIELD_DATA = "data"
     const val AVISOS_FIELD_CORPO = "corpo"
     const val AVISOS_FIELD_USUARIO = "usuario"
-    const val AVISOS_FIELD_IDENTIFICACAO = "identificacao"
     const val AVISOS_FIELD_ID = "id"
     const val AVISOS_FIELD_ATIVO = "ativo"
 }
