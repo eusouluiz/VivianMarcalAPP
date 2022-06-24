@@ -1,6 +1,5 @@
 package br.edu.up.vivianmarcal
 
-import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import br.edu.up.vivianmarcal.model.aviso.Aviso
 import br.edu.up.vivianmarcal.adapter.AvisoListAdapter
@@ -20,7 +19,6 @@ import br.edu.up.vivianmarcal.firebase.FirebaseVM
 import br.edu.up.vivianmarcal.model.usuario.TipoUsuario
 import br.edu.up.vivianmarcal.model.usuario.Usuario
 import com.google.firebase.Timestamp
-import java.text.SimpleDateFormat
 import java.util.HashMap
 import java.util.stream.IntStream.range
 import kotlin.collections.ArrayList
@@ -30,7 +28,6 @@ class AvisoActivity : AppCompatActivity() {
     private val avisos = ArrayList<Aviso?>()
     private var usuario: Usuario? = null
     var avisoListAdapter: AvisoListAdapter? = null
-    var sdf = SimpleDateFormat("dd/MM HH:mm")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,8 +105,8 @@ class AvisoActivity : AppCompatActivity() {
             }
             builder.setPositiveButton("Alterar") {_, _ ->
                 aviso.texto = input.text.toString()
-                aviso.hora = sdf.format(Timestamp.now().toDate().time)
-                avisos.sortByDescending { it!!.hora }
+                aviso.data = Timestamp.now()
+                avisos.sortByDescending { it!!.data }
                 atualizarAvisosFB(aviso, aviso.id!!.toInt())
             }
         }else{
@@ -151,7 +148,7 @@ class AvisoActivity : AppCompatActivity() {
                         avisos.add(
                             Aviso(
                                 campoTexto,
-                                sdf.format(data.toDate().time),
+                                data,
                                 usuarioFB,
                                 id,
                                 ativo
@@ -159,7 +156,7 @@ class AvisoActivity : AppCompatActivity() {
                         )
 
                     }
-                    avisos.sortByDescending { it!!.hora }
+                    avisos.sortByDescending { it!!.data }
                     avisoListAdapter = AvisoListAdapter(
                         avisos
                     ) { aviso ->

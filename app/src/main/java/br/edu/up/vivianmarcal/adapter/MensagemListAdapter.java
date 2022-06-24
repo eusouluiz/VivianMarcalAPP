@@ -12,6 +12,7 @@ import com.example.projeto_ds2.R;
 import br.edu.up.vivianmarcal.model.mensagem.Mensagem;
 import br.edu.up.vivianmarcal.model.mensagem.OrigemEnum;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class MensagemListAdapter extends RecyclerView.Adapter<MensagemListAdapter.MensagemViewHolder> {
@@ -53,7 +54,8 @@ public class MensagemListAdapter extends RecyclerView.Adapter<MensagemListAdapte
 
         TextView hora = holder.itemView.findViewById(R.id.time_msg);
 
-        hora.setText(mensagem.getHora());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM HH:mm");
+        hora.setText( sdf.format(mensagem.getData().toDate().getTime()));
     }
 
     @Override

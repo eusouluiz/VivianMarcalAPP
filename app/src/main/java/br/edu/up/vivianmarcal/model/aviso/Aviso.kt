@@ -1,9 +1,6 @@
 package br.edu.up.vivianmarcal.model.aviso
 
-import android.text.Editable
 import br.edu.up.vivianmarcal.firebase.FirebaseConstants
-import br.edu.up.vivianmarcal.model.mensagem.Mensagem
-import br.edu.up.vivianmarcal.model.mensagem.OrigemEnum
 import br.edu.up.vivianmarcal.model.usuario.Usuario
 import com.google.firebase.Timestamp
 import java.io.Serializable
@@ -11,7 +8,7 @@ import kotlin.collections.ArrayList
 
 class Aviso : Serializable {
     var texto: String? = null
-    var hora: String? = null
+    var data: Timestamp? = null
     var usuario: Usuario? = null
     var id: Number? = null
     var ativo: Boolean? = null
@@ -24,9 +21,9 @@ class Aviso : Serializable {
         this.ativo = ativo
     }
 
-    constructor(texto: String?, hora: String?, usuarioHash: HashMap<String, Any?>, id: Number?, ativo: Boolean?) {
+    constructor(texto: String?, data: Timestamp?, usuarioHash: HashMap<String, Any?>, id: Number?, ativo: Boolean?) {
         this.texto = texto
-        this.hora = hora
+        this.data = data
         this.usuario = Usuario.hashAsUsuario(usuarioHash)
         this.id = id
         this.ativo = ativo

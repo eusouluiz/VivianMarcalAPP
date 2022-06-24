@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import java.text.SimpleDateFormat;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,7 +56,8 @@ public class AvisoListAdapter extends RecyclerView.Adapter<AvisoListAdapter.Avis
             TextView timeTextViewAviso = holder.itemView.
                     findViewById(R.id.time_aviso);
 
-            timeTextViewAviso.setText(aviso.getHora());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM HH:mm");
+            timeTextViewAviso.setText(sdf.format(aviso.getData().toDate().getTime()));
         } else {
             holder.itemView.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         }

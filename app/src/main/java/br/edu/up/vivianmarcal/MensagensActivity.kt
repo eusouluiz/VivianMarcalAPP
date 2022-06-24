@@ -1,7 +1,5 @@
 package br.edu.up.vivianmarcal
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import br.edu.up.vivianmarcal.adapter.MensagemListAdapter
 import br.edu.up.vivianmarcal.model.mensagem.Mensagem
@@ -17,7 +15,6 @@ import com.google.android.material.textfield.TextInputEditText
 import br.edu.up.vivianmarcal.model.mensagem.OrigemEnum
 import br.edu.up.vivianmarcal.model.usuario.Usuario
 import com.google.firebase.Timestamp
-import java.text.SimpleDateFormat
 import java.util.stream.IntStream.range
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -27,7 +24,6 @@ class MensagensActivity : AppCompatActivity() {
     var mensagemListAdapter: MensagemListAdapter? = null
     private var usuario: Usuario? = null
     private val mensagens = ArrayList<Mensagem>()
-    var sdf = SimpleDateFormat("dd/MM HH:mm")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,7 +90,7 @@ class MensagensActivity : AppCompatActivity() {
                                 Mensagem(
                                     OrigemEnum.Remetente,
                                     campoTexto,
-                                    sdf.format(data.toDate().time)
+                                    data
                                 )
                             )
                         } else {
@@ -102,7 +98,7 @@ class MensagensActivity : AppCompatActivity() {
                                 Mensagem(
                                     OrigemEnum.Destinatario,
                                     campoTexto,
-                                    sdf.format(data.toDate().time)
+                                    data
                                 )
                             )
                         }

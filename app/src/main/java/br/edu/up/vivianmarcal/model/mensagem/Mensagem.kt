@@ -12,12 +12,12 @@ class Mensagem : Serializable {
     var origem: OrigemEnum? = null
     private var nome: String? = null
     var texto: String
-    var hora: String? = null
+    var data: Timestamp? = null
 
-    constructor(origem: OrigemEnum?, texto: String, hora: String?) {
+    constructor(origem: OrigemEnum?, texto: String, data: Timestamp?) {
         this.origem = origem
         this.texto = texto
-        this.hora = hora
+        this.data = data
     }
 
     constructor(usuario: Usuario?, texto: String) {
